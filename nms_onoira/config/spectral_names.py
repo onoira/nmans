@@ -1,6 +1,9 @@
 from nms_onoira.models import RangeDict
 
-DEITIES = RangeDict({
+# Each of the five ranges is assigned one of the five invasions of Ireland.
+# Names are selected arbitrarily and then ordered alphabetically and assigned
+# from hottest -> coldest.
+SPECTRAL_NAMES = RangeDict({
     range(0, 2): {  # fomoire
         'o': "balor",
         'b': "bres",

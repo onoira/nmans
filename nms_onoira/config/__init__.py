@@ -1,10 +1,10 @@
 
 __all__ = [
-    'AFFICES',
-    'DEITIES',
-    'HEADERS'
+    'TRAIT_AFFICES',
+    'HEADERS',
+    'SPECTRAL_NAMES',
 ]
 
-from nms_onoira.config.affices import AFFICES
-from nms_onoira.config.deities import DEITIES
+from nms_onoira.config.affices import TRAIT_AFFICES
 from nms_onoira.config.headers import HEADERS
+from nms_onoira.config.spectral_names import SPECTRAL_NAMES

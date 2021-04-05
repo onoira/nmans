@@ -13,13 +13,12 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
-from nms_onoira.config.deities import DEITIES
 import re
 
 from nms_onoira import portmanteau
-from nms_onoira.config import AFFICES
+from nms_onoira.config import SPECTRAL_NAMES, TRAIT_AFFICES
 from nms_onoira.exceptions import NmsOnoiraException
-from nms_onoira.models import StarClassification
+from nms_onoira.models import SpectralClassification
 
 _RE_SYSTEM_CLASSIFICATION = re.compile(
     r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
@@ -27,27 +26,27 @@ _RE_SYSTEM_CLASSIFICATION = re.compile(
 )
 
 
-def is_valid(classification: StarClassification) -> bool:
+def is_valid(classification: SpectralClassification) -> bool:
     code = str(classification)
     return _RE_SYSTEM_CLASSIFICATION.match(code)
 
 
-def get_affices(classification: StarClassification) -> tuple[str]:
-    if classification.oddities == str():
+def get_affices(classification: SpectralClassification) -> tuple[str]:
+    if classification.traits == str():
         return tuple()
 
     affices = list()
-    for c in classification.oddities:
-        affices.append(AFFICES[c])
+    for c in classification.traits:
+        affices.append(TRAIT_AFFICES[c])
 
     return tuple(affices)
 
 
-def get_deity(classification: StarClassification) -> str:
-    return DEITIES[classification.luminosity][classification.classification]
+def get_deity(classification: SpectralClassification) -> str:
+    return SPECTRAL_NAMES[classification.spectral_subtype][classification.spectral_type]
 
 
-def get_system_name(region: str, classification: StarClassification) -> str:
+def get_system_name(region: str, classification: SpectralClassification) -> str:
     if not is_valid(classification):
         raise NmsOnoiraException("Invalid star class", str(classification))
 

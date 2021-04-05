@@ -1,5 +1,5 @@
 
-AFFICES = {
+TRAIT_AFFICES = {
     'e': 'ae',
     'f': 'ai',
     'h': 'ay',

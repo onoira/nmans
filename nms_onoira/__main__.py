@@ -17,7 +17,7 @@ import click
 
 from nms_onoira import config
 from nms_onoira import get_system_name
-from nms_onoira.models import StarClassification
+from nms_onoira.models import SpectralClassification
 
 
 @click.group()
@@ -26,18 +26,18 @@ def main(): pass
 
 @main.command()
 @click.argument('region')
-@click.argument('star-class')
-def system(region: str, star_class: str):
-    star_class = star_class.lower()
-    classification = StarClassification(star_class)
+@click.argument('spectral-class')
+def system(region: str, spectral_class: str):
+    spectral_class = spectral_class.lower()
+    classification = SpectralClassification(spectral_class)
     click.echo(get_system_name(region, classification))
 
 
 @main.command()
 def list_config():
     _config = {
-        'affices': config.AFFICES,
-        'deities': config.DEITIES,
+        'affices': config.TRAIT_AFFICES,
+        'deities': config.SPECTRAL_NAMES,
         'headers': config.HEADERS
     }
     click.echo(_config)
