@@ -3,10 +3,8 @@
 import os
 from setuptools import find_packages, setup
 
-# Package meta-data.
 PACKAGE = 'nmans'
 
-# What packages are required for this module to be executed?
 REQUIRED = [
     'bs4',
     'click',
@@ -15,30 +13,19 @@ REQUIRED = [
     # 'git+https://github.com/onoira/portmanteaur'
 ]
 
-# What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
-
-# The rest you shouldn't have to touch too much :)
-# ------------------------------------------------
+EXTRAS = {}
 
 here = os.path.abspath(os.path.dirname(__file__))
-
-# Load the package's __version__.py module as a dictionary.
 about = {}
 with open(os.path.join(here, PACKAGE.lower(), '__version__.py')) as fp:
     exec(fp.read(), about)
 
-# Import the README and use it as the long-description.
-# Note: this will only work if 'README.md' is present in your MANIFEST.in file!
 try:
     with open(os.path.join(here, 'README.md'), encoding='utf-8') as fp:
         long_description = '\n' + fp.read()
 except FileNotFoundError:
     long_description = about['__description__']
 
-# Where the magic happens:
 setup(
     name=about['__title__'],
     version=about['__version__'],
@@ -52,9 +39,6 @@ setup(
     packages=find_packages(
         exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
     ),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
-
     entry_points={
         'console_scripts': ['nmans=nmans.__main__:main'],
     },
