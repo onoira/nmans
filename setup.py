@@ -8,7 +8,11 @@ PACKAGE = 'nmans'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'requests', 'bs4', 'html5lib', 'click'
+    'bs4',
+    'click',
+    'html5lib',
+    'requests',
+    # 'git+https://github.com/onoira/portmanteaur'
 ]
 
 # What packages are optional?

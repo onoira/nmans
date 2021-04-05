@@ -17,7 +17,7 @@ import re
 
 from nmans import portmanteau
 from nmans.config import SPECTRAL_NAMES, TRAIT_AFFICES
-from nmans.exceptions import NmansOnoiraException
+from nmans.exceptions import NmansException
 from nmans.models import SpectralClassification
 
 _RE_SYSTEM_CLASSIFICATION = re.compile(
@@ -31,7 +31,7 @@ def is_valid(classification: SpectralClassification) -> bool:
     return _RE_SYSTEM_CLASSIFICATION.match(code)
 
 
-def get_affices(classification: SpectralClassification) -> tuple[str]:
+def get_trait_affices(classification: SpectralClassification) -> tuple[str]:
     if classification.traits == str():
         return tuple()
 
@@ -42,20 +42,20 @@ def get_affices(classification: SpectralClassification) -> tuple[str]:
     return tuple(affices)
 
 
-def get_deity(classification: SpectralClassification) -> str:
+def get_spectral_name(classification: SpectralClassification) -> str:
     return SPECTRAL_NAMES[classification.spectral_subtype][classification.spectral_type]
 
 
 def get_system_name(region: str, classification: SpectralClassification) -> str:
     if not is_valid(classification):
-        raise NmansOnoiraException("Invalid spectral class", str(classification))
+        raise NmansException("Invalid spectral class", str(classification))
 
-    deity = get_deity(classification)
-    name = portmanteau.get_word([region, deity])
+    spectral_name = get_spectral_name(classification)
+    name = portmanteau.get_word([region, spectral_name])
 
-    affices = get_affices(classification)
+    affices = get_trait_affices(classification)
     for idx, affix in enumerate(affices):
-        if idx == 0:
+        if idx % 2 == 1:
             name = f'{affix}-{name}'
         else:
             name = f'{name}-{affix}'
