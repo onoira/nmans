@@ -13,3 +13,35 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
+import click
+
+from nms_onoira import config
+from nms_onoira import get_system_name
+from nms_onoira.models import StarClassification
+
+
+@click.group()
+def main(): pass
+
+
+@main.command()
+@click.argument('region')
+@click.argument('star-class')
+def system(region: str, star_class: str):
+    star_class = star_class.lower()
+    classification = StarClassification(star_class)
+    click.echo(get_system_name(region, classification))
+
+
+@main.command()
+def list_config():
+    _config = {
+        'affices': config.AFFICES,
+        'deities': config.DEITIES,
+        'headers': config.HEADERS
+    }
+    click.echo(_config)
+
+
+if __name__ == '__main__':
+    main()

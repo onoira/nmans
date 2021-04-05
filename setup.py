@@ -4,11 +4,11 @@ import os
 from setuptools import find_packages, setup
 
 # Package meta-data.
-PACKAGE = 'nms-onoira'
+PACKAGE = 'nms_onoira'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    # 'requests', 'maya', 'records',
+    'requests', 'bs4', 'html5lib', 'click'
 ]
 
 # What packages are optional?
@@ -45,13 +45,15 @@ setup(
     author_email=about['__author_email__'],
     python_requires=about['PYTHON_REQUIRES'],
     url=about['__url__'],
-    packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
+    packages=find_packages(
+        exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
+    ),
     # If your package is a single module, use this instead of 'packages':
     # py_modules=['mypackage'],
 
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
+    entry_points={
+        'console_scripts': ['nms=nms_onoira.__main__:main'],
+    },
     install_requires=REQUIRED,
     extras_require=EXTRAS,
     include_package_data=True,

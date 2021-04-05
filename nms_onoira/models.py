@@ -24,3 +24,18 @@ class RangeDict(dict):
             raise KeyError(item)
         else:
             return super().__getitem__(item)
+
+
+class StarClassification:
+
+    def __init__(self, star_class: str):
+        self.classification: str = star_class[0]
+        self.luminosity: int = int(star_class[1])
+        self.oddities: str
+        if len(star_class) > 2:
+            self.oddities = star_class[2:]
+        else:
+            self.oddities = str()
+
+    def __str__(self):
+        return f'{self.classification}{self.luminosity}{self.oddities}'
