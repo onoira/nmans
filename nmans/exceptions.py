@@ -1,5 +1,5 @@
 """exception - Exception types"""
 
 
-class NmsOnoiraException(Exception):
+class NmansOnoiraException(Exception):
     pass

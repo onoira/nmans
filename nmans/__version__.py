@@ -1,7 +1,7 @@
 VERSION = (0, 1, 0)
 PYTHON_REQUIRES = '>=3.9.0'
 
-__title__ = "nms-onoira"
+__title__ = "nmans"
 __author__ = "Onoira"
 __author_email__ = "onoira@psiko.zone"
 __description__ = ""

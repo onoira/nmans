@@ -1,4 +1,4 @@
-"""_nms_onoira - Package internals"""
+"""_nmans - Package internals"""
 # Copyright (C) 2021 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,10 +15,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import re
 
-from nms_onoira import portmanteau
-from nms_onoira.config import SPECTRAL_NAMES, TRAIT_AFFICES
-from nms_onoira.exceptions import NmsOnoiraException
-from nms_onoira.models import SpectralClassification
+from nmans import portmanteau
+from nmans.config import SPECTRAL_NAMES, TRAIT_AFFICES
+from nmans.exceptions import NmansOnoiraException
+from nmans.models import SpectralClassification
 
 _RE_SYSTEM_CLASSIFICATION = re.compile(
     r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
@@ -48,7 +48,7 @@ def get_deity(classification: SpectralClassification) -> str:
 
 def get_system_name(region: str, classification: SpectralClassification) -> str:
     if not is_valid(classification):
-        raise NmsOnoiraException("Invalid star class", str(classification))
+        raise NmansOnoiraException("Invalid spectral class", str(classification))
 
     deity = get_deity(classification)
     name = portmanteau.get_word([region, deity])

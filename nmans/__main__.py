@@ -15,9 +15,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import click
 
-from nms_onoira import config
-from nms_onoira import get_system_name
-from nms_onoira.models import SpectralClassification
+from nmans import config
+from nmans import get_system_name
+from nmans.models import SpectralClassification
 
 
 @click.group()

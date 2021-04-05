@@ -24,7 +24,7 @@ except ImportError:
 from requests import request
 from bs4 import BeautifulSoup
 
-from nms_onoira.config import HEADERS
+from nmans.config import HEADERS
 
 BASE_URL = 'https://www.portmanteaur.com/'
 RESULTS_TRANSLATION = str.maketrans({'\n': '', ' ': ''})

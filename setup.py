@@ -4,7 +4,7 @@ import os
 from setuptools import find_packages, setup
 
 # Package meta-data.
-PACKAGE = 'nms_onoira'
+PACKAGE = 'nmans'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -52,7 +52,7 @@ setup(
     # py_modules=['mypackage'],
 
     entry_points={
-        'console_scripts': ['nms=nms_onoira.__main__:main'],
+        'console_scripts': ['nmans=nmans.__main__:main'],
     },
     install_requires=REQUIRED,
     extras_require=EXTRAS,

@@ -1,4 +1,4 @@
-from nms_onoira.models import RangeDict
+from nmans.models import RangeDict
 
 # Each of the five ranges is assigned one of the five invasions of Ireland.
 # Names are selected arbitrarily and then ordered alphabetically and assigned

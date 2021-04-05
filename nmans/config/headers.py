@@ -1,5 +1,5 @@
 from requests.utils import default_headers, default_user_agent
-from nms_onoira import __author_email__, __name__, __version__
+from nmans import __author_email__, __name__, __version__
 
 HEADERS = {
     **default_headers(),
