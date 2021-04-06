@@ -17,8 +17,9 @@ import click
 
 from nmans import _cli
 from nmans import config
-from nmans import get_system_name
-from nmans.models import SpectralClassification
+from nmans import get_planet_name, get_system_name, is_valid
+from nmans.models import PlanetaryCharacteristics, SpectralClassification
+
 
 @click.group()
 def main(): pass
@@ -28,7 +29,12 @@ def main(): pass
 @click.argument('region')
 @click.argument('spectral-class')
 def system(region: str, spectral_class: str):
+
     spectral_class = spectral_class.lower()
+    if not is_valid(spectral_class):
+        click.echo("Invalid spectral class")
+        return -1
+
     classification = SpectralClassification(spectral_class)
     click.echo(get_system_name(region, classification))
 
@@ -46,10 +52,27 @@ def planet(
     fauna: str = str(),
     flora: str = str()
 ):
+
+    spectral_class = spectral_class.lower()
+    if not is_valid(spectral_class):
+        click.echo("Invalid spectral class")
+        return -1
+
     weather = _cli.select_weather(weather)
     sentinels = _cli.select_characteristic(sentinels, subject='sentinels')
     fauna = _cli.select_characteristic(fauna, subject='fauna')
     flora = _cli.select_characteristic(flora, subject='flora')
+
+    system_classification = SpectralClassification(spectral_class)
+    characteristics = PlanetaryCharacteristics(
+        weather,
+        sentinels,
+        fauna,
+        flora
+    )
+
+    click.echo()
+    click.echo(get_planet_name(system_classification, characteristics))
 
 
 @main.command()

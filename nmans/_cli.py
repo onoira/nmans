@@ -50,6 +50,7 @@ def _select_option(
     _options, _ = options
 
     if expose_options:
+        click.echo()
         for k, v in _options.items():
             click.echo(f'[{k}] {v}')
         click.echo()

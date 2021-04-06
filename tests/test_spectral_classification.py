@@ -2,20 +2,18 @@ import unittest
 from unittest.mock import Mock, patch
 
 import nmans
-from nmans.models import SpectralClassification
 from nmans.exceptions import NmansException
+from nmans.models import SpectralClassification
 
 
 class TestSpectralClassification(unittest.TestCase):
 
     def test_valid(self):
-        class_ = SpectralClassification('f9p')
-        result = nmans.is_valid(class_)
+        result = nmans.is_valid('o0p')
         self.assertTrue(result)
 
     def test_invalid(self):
-        class_ = SpectralClassification('f9z')  # 'z' is not a valid trait.
-        result = nmans.is_valid(class_)
+        result = nmans.is_valid('!@#$%^&*()`~')
         self.assertFalse(result)
 
     def test_spectral_name(self):
@@ -48,18 +46,8 @@ class TestSpectralClassification(unittest.TestCase):
         class_ = SpectralClassification('o0pw')
         result = nmans.get_system_name('region', class_)
         mock_portmanteaur.get_words.assert_not_called()
-        mock_portmanteaur.get_word.assert_called()
+        mock_portmanteaur.get_word.assert_called_once()
         self.assertEqual(3, len(result.split('-')))
-
-    @patch('nmans._nmans.portmanteaur')
-    def test_system_name_invalid(self, mock_portmanteaur: Mock):
-        class_ = SpectralClassification('o0z')
-        self.assertRaises(
-            NmansException,
-            nmans.get_system_name,
-            *['region', class_]
-        )
-        mock_portmanteaur.assert_not_called()
 
 
 if __name__ == '__main__':

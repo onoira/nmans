@@ -18,12 +18,14 @@ import re
 import portmanteaur
 
 from nmans.config import (
+    CHARACTERISTIC_SUFFICES,
     HEADERS,
     SPECTRAL_NAMES,
     TRAIT_AFFICES,
+    WEATHER_NAMES,
 )
 from nmans.exceptions import NmansException
-from nmans.models import SpectralClassification
+from nmans.models import PlanetaryCharacteristics, SpectralClassification
 
 _RE_SYSTEM_CLASSIFICATION = re.compile(
     r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
@@ -31,9 +33,8 @@ _RE_SYSTEM_CLASSIFICATION = re.compile(
 )
 
 
-def is_valid(classification: SpectralClassification) -> bool:
-    code = str(classification)
-    return _RE_SYSTEM_CLASSIFICATION.match(code)
+def is_valid(classification_code: str) -> bool:
+    return _RE_SYSTEM_CLASSIFICATION.match(classification_code)
 
 
 def get_trait_affices(classification: SpectralClassification) -> tuple[str]:
@@ -52,8 +53,6 @@ def get_spectral_name(classification: SpectralClassification) -> str:
 
 
 def get_system_name(region: str, classification: SpectralClassification) -> str:
-    if not is_valid(classification):
-        raise NmansException("Invalid spectral class", str(classification))
 
     spectral_name = get_spectral_name(classification)
     name = portmanteaur.get_word([region, spectral_name], headers=HEADERS)
@@ -67,5 +66,39 @@ def get_system_name(region: str, classification: SpectralClassification) -> str:
 
     return name
 
-def get_planet_name() -> str:
-    ...
+
+def get_characteristics_translated(
+    characteristics: PlanetaryCharacteristics
+) -> PlanetaryCharacteristics:
+
+    characteristics_translated = PlanetaryCharacteristics.empty()
+
+    characteristics_translated.weather = WEATHER_NAMES[characteristics.weather]
+    characteristics_translated.sentinels = CHARACTERISTIC_SUFFICES[characteristics.sentinels]
+    characteristics_translated.fauna = CHARACTERISTIC_SUFFICES[characteristics.fauna]
+    characteristics_translated.flora = CHARACTERISTIC_SUFFICES[characteristics.flora]
+
+    return characteristics_translated
+
+
+def get_planet_name(
+    system_classification: SpectralClassification,
+    characteristics: PlanetaryCharacteristics
+) -> str:
+
+    # Maybe we're just tired, but all the code for planets is pretty ugly so far.
+    characteristics_translated = get_characteristics_translated(characteristics)
+    spectral_name = get_spectral_name(system_classification)
+
+    name = portmanteaur.get_word(
+        [spectral_name, characteristics_translated.weather],
+        headers=HEADERS
+    )
+
+    # Apply suffix
+    name += f'-'
+    name += f'{characteristics_translated.sentinels}'
+    name += f'{characteristics_translated.fauna}'
+    name += f'{characteristics_translated.flora}'
+
+    return name

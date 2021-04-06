@@ -40,3 +40,16 @@ class SpectralClassification:
 
     def __str__(self):
         return f'{self.spectral_type}{self.spectral_subtype}{self.traits}'
+
+
+class PlanetaryCharacteristics:
+
+    @classmethod
+    def empty(_):
+        return PlanetaryCharacteristics('', '', '', '')
+
+    def __init__(self, weather: str, sentinels: str, fauna: str, flora: str):
+        self.weather: str = weather
+        self.sentinels: str = sentinels
+        self.fauna: str = fauna
+        self.flora: str = flora

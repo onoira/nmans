@@ -18,6 +18,7 @@ from nmans._nmans import is_valid
 from nmans._nmans import get_trait_affices
 from nmans._nmans import get_spectral_name
 from nmans._nmans import get_system_name
+from nmans._nmans import get_planet_name
 
 
 def get_version() -> tuple[int]:
