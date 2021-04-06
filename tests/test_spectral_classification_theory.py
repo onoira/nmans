@@ -15,9 +15,8 @@ class TestSpectralClassificationTheory(unittest.TestCase):
             re.IGNORECASE
         )
     )
-    @patch('nmans._nmans.portmanteau')
-    def test_system_name_multiple_traits(self, mock_portmanteau: Mock):
-        mock_portmanteau.get_word.return_value = 'foo'
+    @patch('nmans._nmans.portmanteaur')
+    def test_system_name_multiple_traits(self, _:Mock):
         class_ = SpectralClassification('o0pqpq')
         result = nmans.get_system_name('region', class_)
         self.assertEqual(5, len(result.split('-')))

@@ -43,22 +43,23 @@ class TestSpectralClassification(unittest.TestCase):
         result = nmans.get_trait_affices(class_)
         self.assertEqual(2, len(result))
 
-    @patch('nmans._nmans.portmanteau')
-    def test_system_name(self, mock_portmanteau: Mock):
-        mock_portmanteau.get_word.return_value = 'foo'
+    @patch('nmans._nmans.portmanteaur')
+    def test_system_name(self, mock_portmanteaur: Mock):
         class_ = SpectralClassification('o0pw')
         result = nmans.get_system_name('region', class_)
+        mock_portmanteaur.get_words.assert_not_called()
+        mock_portmanteaur.get_word.assert_called()
         self.assertEqual(3, len(result.split('-')))
 
-    @patch('nmans._nmans.portmanteau')
-    def test_system_name_invalid(self, mock_portmanteau: Mock):
-        mock_portmanteau.get_world.return_value = 'foo'
+    @patch('nmans._nmans.portmanteaur')
+    def test_system_name_invalid(self, mock_portmanteaur: Mock):
         class_ = SpectralClassification('o0z')
         self.assertRaises(
             NmansException,
             nmans.get_system_name,
             *['region', class_]
         )
+        mock_portmanteaur.assert_not_called()
 
 
 if __name__ == '__main__':
