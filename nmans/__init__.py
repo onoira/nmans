@@ -4,8 +4,6 @@ __all__ = [
     'get_version'
 ]
 
-from typing import Tuple as __Tuple
-
 from nmans.__version__ import __author__
 from nmans.__version__ import __author_email__
 from nmans.__version__ import __license__
@@ -22,5 +20,5 @@ from nmans._nmans import get_spectral_name
 from nmans._nmans import get_system_name
 
 
-def get_version() -> __Tuple[int]:
+def get_version() -> tuple[int]:
     return __VERSION
