@@ -15,10 +15,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import click
 
+from nmans import _cli
 from nmans import config
 from nmans import get_system_name
 from nmans.models import SpectralClassification
-
 
 @click.group()
 def main(): pass
@@ -31,6 +31,25 @@ def system(region: str, spectral_class: str):
     spectral_class = spectral_class.lower()
     classification = SpectralClassification(spectral_class)
     click.echo(get_system_name(region, classification))
+
+
+@main.command()
+@click.option('--spectral-class', prompt=True, help='Spectral class of the host star')
+@click.option('--weather')
+@click.option('--sentinels')
+@click.option('--fauna')
+@click.option('--flora')
+def planet(
+    spectral_class: str,
+    weather: str = str(),
+    sentinels: str = str(),
+    fauna: str = str(),
+    flora: str = str()
+):
+    weather = _cli.select_weather(weather)
+    sentinels = _cli.select_characteristic(sentinels, subject='sentinels')
+    fauna = _cli.select_characteristic(fauna, subject='fauna')
+    flora = _cli.select_characteristic(flora, subject='flora')
 
 
 @main.command()

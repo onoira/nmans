@@ -16,7 +16,12 @@
 import re
 
 import portmanteaur
-from nmans.config import SPECTRAL_NAMES, TRAIT_AFFICES, HEADERS
+
+from nmans.config import (
+    HEADERS,
+    SPECTRAL_NAMES,
+    TRAIT_AFFICES,
+)
 from nmans.exceptions import NmansException
 from nmans.models import SpectralClassification
 
@@ -61,3 +66,6 @@ def get_system_name(region: str, classification: SpectralClassification) -> str:
             name = f'{name}-{affix}'
 
     return name
+
+def get_planet_name() -> str:
+    ...
