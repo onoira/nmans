@@ -15,8 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import re
 
-from nmans import portmanteau
-from nmans.config import SPECTRAL_NAMES, TRAIT_AFFICES
+import portmanteaur
+from nmans.config import SPECTRAL_NAMES, TRAIT_AFFICES, HEADERS
 from nmans.exceptions import NmansException
 from nmans.models import SpectralClassification
 
@@ -51,7 +51,7 @@ def get_system_name(region: str, classification: SpectralClassification) -> str:
         raise NmansException("Invalid spectral class", str(classification))
 
     spectral_name = get_spectral_name(classification)
-    name = portmanteau.get_word([region, spectral_name])
+    name = portmanteaur.get_word([region, spectral_name], headers=HEADERS)
 
     affices = get_trait_affices(classification)
     for idx, affix in enumerate(affices):

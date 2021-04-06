@@ -6,13 +6,9 @@ from setuptools import find_packages, setup
 PACKAGE = 'nmans'
 
 REQUIRED = [
-    'bs4',
     'click',
-    'html5lib',
-    'requests',
-    # 'git+https://github.com/onoira/portmanteaur'
+    'portmanteaur @ git+https://github.com/onoira/portmanteaur',
 ]
-
 EXTRAS = {}
 
 here = os.path.abspath(os.path.dirname(__file__))
