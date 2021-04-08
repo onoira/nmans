@@ -76,6 +76,18 @@ def planet(
 
 
 @main.command()
+@click.option('--genus')
+@click.option('--temperament')
+def fauna(genus:str, temperament:str):
+
+    genus = _cli.select_genus(genus)
+    temperament = _cli.select_temperament(temperament)
+
+    click.echo(get_fauna_name(genus, temperament))
+
+
+
+@main.command()
 def list_config():
     _config = {
         'affices': config.TRAIT_AFFICES,
