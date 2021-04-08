@@ -1,9 +1,26 @@
 # Roadmap
 
-- [x] Rename from 'nms_onoira'
-- [x] Add unit testing
-- [x] Add command to generate planet names
-- [ ] Add command to generate fauna names
-- [ ] Include a random element for name generation(?).
-- [ ] ~~Add docstrings to config~~
-- [ ] Separate configuration from code
+## 1.0
+
+- [ ] Name generation:
+  - [x] Systems
+  - [x] Planets
+  - [ ] Fauna
+- [x] Testing
+- [ ] Configuration
+  - [ ] Schema
+  - [ ] Validation
+  - [ ] Templates
+  - [ ] Environment variable
+  - [ ] Documentation
+
+## 1.1
+
+- [ ] Name generation:
+  - [ ] Flora
+
+## 1.2
+
+- [ ] Name generation:
+  - [ ] Waypoint
+- [ ] Documentation
