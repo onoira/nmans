@@ -78,23 +78,17 @@ def planet(
 @main.command()
 @click.option('--genus')
 @click.option('--temperament')
-def fauna(genus:str, temperament:str):
-
-    genus = _cli.select_genus(genus)
-    temperament = _cli.select_temperament(temperament)
-
-    click.echo(get_fauna_name(genus, temperament))
-
+def fauna(genus: str, temperament: str):
+    ...
 
 
 @main.command()
-def list_config():
-    _config = {
-        'affices': config.TRAIT_AFFICES,
-        'deities': config.SPECTRAL_NAMES,
-        'headers': config.HEADERS
-    }
-    click.echo(_config)
+@click.option('--reflow', is_flag=True)
+def list_config(reflow: bool = False):
+    if reflow:
+        config.write_config()
+    from pprint import pprint
+    pprint(config.read_config().to_json())
 
 
 if __name__ == '__main__':

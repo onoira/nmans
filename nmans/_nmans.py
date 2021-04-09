@@ -17,14 +17,7 @@ import re
 
 import portmanteaur
 
-from nmans.config import (
-    CHARACTERISTIC_SUFFICES,
-    HEADERS,
-    SPECTRAL_NAMES,
-    TRAIT_AFFICES,
-    WEATHER_NAMES,
-)
-from nmans.exceptions import NmansException
+from nmans import config
 from nmans.models import PlanetaryCharacteristics, SpectralClassification
 
 _RE_SYSTEM_CLASSIFICATION = re.compile(
@@ -55,7 +48,10 @@ def get_spectral_name(classification: SpectralClassification) -> str:
 def get_system_name(region: str, classification: SpectralClassification) -> str:
 
     spectral_name = get_spectral_name(classification)
-    name = portmanteaur.get_word([region, spectral_name], headers=HEADERS)
+    name = portmanteaur.get_word(
+        [region, spectral_name],
+        headers=config.get_http_headers()
+    )
 
     affices = get_trait_affices(classification)
     for idx, affix in enumerate(affices):
@@ -87,12 +83,13 @@ def get_planet_name(
 ) -> str:
 
     # Maybe we're just tired, but all the code for planets is pretty ugly so far.
-    characteristics_translated = get_characteristics_translated(characteristics)
+    characteristics_translated = get_characteristics_translated(
+        characteristics)
     spectral_name = get_spectral_name(system_classification)
 
     name = portmanteaur.get_word(
         [spectral_name, characteristics_translated.weather],
-        headers=HEADERS
+        headers=config.get_http_headers()
     )
 
     # Apply suffix

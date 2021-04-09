@@ -14,19 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
-class RangeDict(dict):
-
-    def __getitem__(self, item):
-        if not isinstance(item, range):
-            for key in self:
-                if item in key:
-                    return self[key]
-            raise KeyError(item)
-        else:
-            return super().__getitem__(item)
-
-
 class SpectralClassification:
 
     def __init__(self, star_class: str):
