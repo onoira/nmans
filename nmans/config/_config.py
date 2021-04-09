@@ -56,7 +56,7 @@ def read_config() -> Config:
 
     config: Config
     if not os.path.exists(p):
-        os.makedirs(p)
+        os.makedirs(Path(*os.path.split(p)[:-1]), exist_ok=True)
         config = default_config
         write_config(config)
     else:
