@@ -15,10 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import click
 
-from nmans import _cli
 from nmans import config
-from nmans import get_planet_name, get_system_name, is_valid
-from nmans.models import PlanetaryCharacteristics, SpectralClassification
 
 
 @click.group()
