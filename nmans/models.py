@@ -14,26 +14,27 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-class SpectralClassification:
 
-    def __init__(self, star_class: str):
-        self.spectral_type: str = star_class[0]
-        self.spectral_subtype: int = int(star_class[1])
+class SpectralClass:
+
+    def __init__(self, spectral_class: str):
+        self.type: str = spectral_class[0]
+        self.subtype: int = int(spectral_class[1])
         self.traits: str
-        if len(star_class) > 2:
-            self.traits = star_class[2:]
+        if len(spectral_class) > 2:
+            self.traits = spectral_class[2:]
         else:
             self.traits = str()
 
     def __str__(self):
-        return f'{self.spectral_type}{self.spectral_subtype}{self.traits}'
+        return f'{self.type}{self.subtype}{self.traits}'
 
 
-class PlanetaryCharacteristics:
+class PlanetTraits:
 
     @classmethod
     def empty(_):
-        return PlanetaryCharacteristics('', '', '', '')
+        return PlanetTraits('', '', '', '')
 
     def __init__(self, weather: str, sentinels: str, fauna: str, flora: str):
         self.weather: str = weather

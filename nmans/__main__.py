@@ -15,8 +15,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import click
 
-from nmans import config
-
+import nmans.config as config
+import nmans._cli as _cli
+from nmans import get_system_name
+from nmans.models import SpectralClass
 
 @click.group()
 def main(): pass
@@ -28,12 +30,12 @@ def main(): pass
 def system(region: str, spectral_class: str):
 
     spectral_class = spectral_class.lower()
-    if not is_valid(spectral_class):
+    if not _cli.is_valid(spectral_class):
         click.echo("Invalid spectral class")
         return -1
 
-    classification = SpectralClassification(spectral_class)
-    click.echo(get_system_name(region, classification))
+    class_ = SpectralClass(spectral_class)
+    click.echo(get_system_name(region, class_))
 
 
 @main.command()
@@ -70,13 +72,6 @@ def planet(
 
     click.echo()
     click.echo(get_planet_name(system_classification, characteristics))
-
-
-@main.command()
-@click.option('--genus')
-@click.option('--temperament')
-def fauna(genus: str, temperament: str):
-    ...
 
 
 @main.command()

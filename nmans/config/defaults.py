@@ -13,14 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from nmans.config.const import GENERA
-from nmans.config.models import RangeDict, Genera, Qualities, Config
-
-default_genera = Genera(
-    aer=dict((k, '') for k in GENERA['aer'].keys()),
-    aqua=dict((k, '') for k in GENERA['aqua'].keys()),
-    terra=dict((k, '') for k in GENERA['terra'].keys()),
-)
+from nmans.config.models import RangeDict, Qualities, Config
 
 default_qualities = Qualities.empty()
 
@@ -140,10 +133,21 @@ default_tempers = {
     'volatile': ''
 }
 
-default_traits = {}
+default_traits = {
+    'e': '',
+    'f': '',
+    'h': '',
+    'k': '',
+    'm': '',
+    'n': '',
+    'p': '',
+    'q': '',
+    's': '',
+    'v': '',
+    'w': ''
+}
 
 default_config = Config(
-    genera=default_genera,
     http_from='',
     qualities=default_qualities,
     spectra=default_spectra,

@@ -18,34 +18,25 @@ import re
 import portmanteaur
 
 from nmans import config
-from nmans.models import PlanetaryCharacteristics, SpectralClassification
-
-_RE_SYSTEM_CLASSIFICATION = re.compile(
-    r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
-    re.IGNORECASE
-)
+from nmans.models import PlanetTraits, SpectralClass
 
 
-def is_valid(classification_code: str) -> bool:
-    return _RE_SYSTEM_CLASSIFICATION.match(classification_code)
-
-
-def get_trait_affices(classification: SpectralClassification) -> tuple[str]:
-    if classification.traits == str():
+def get_trait_affices(class_: SpectralClass) -> tuple[str]:
+    if class_.traits == str():
         return tuple()
 
     affices = list()
-    for c in classification.traits:
-        affices.append(TRAIT_AFFICES[c])
+    for trait_code in class_.traits:
+        affices.append(config.read_config().traits[trait_code])
 
     return tuple(affices)
 
 
-def get_spectral_name(classification: SpectralClassification) -> str:
-    return SPECTRAL_NAMES[classification.spectral_subtype][classification.spectral_type]
+def get_spectral_name(class_: SpectralClass) -> str:
+    return config.read_config().spectra[class_.subtype][class_.type]
 
 
-def get_system_name(region: str, classification: SpectralClassification) -> str:
+def get_system_name(region: str, classification: SpectralClass) -> str:
 
     spectral_name = get_spectral_name(classification)
     name = portmanteaur.get_word(
@@ -63,39 +54,39 @@ def get_system_name(region: str, classification: SpectralClassification) -> str:
     return name
 
 
-def get_characteristics_translated(
-    characteristics: PlanetaryCharacteristics
-) -> PlanetaryCharacteristics:
+# def get_characteristics_translated(
+#     characteristics: PlanetTraits
+# ) -> PlanetTraits:
 
-    characteristics_translated = PlanetaryCharacteristics.empty()
+#     characteristics_translated = PlanetTraits.empty()
 
-    characteristics_translated.weather = WEATHER_NAMES[characteristics.weather]
-    characteristics_translated.sentinels = CHARACTERISTIC_SUFFICES[characteristics.sentinels]
-    characteristics_translated.fauna = CHARACTERISTIC_SUFFICES[characteristics.fauna]
-    characteristics_translated.flora = CHARACTERISTIC_SUFFICES[characteristics.flora]
+#     characteristics_translated.weather = WEATHER_NAMES[characteristics.weather]
+#     characteristics_translated.sentinels = CHARACTERISTIC_SUFFICES[characteristics.sentinels]
+#     characteristics_translated.fauna = CHARACTERISTIC_SUFFICES[characteristics.fauna]
+#     characteristics_translated.flora = CHARACTERISTIC_SUFFICES[characteristics.flora]
 
-    return characteristics_translated
+#     return characteristics_translated
 
 
-def get_planet_name(
-    system_classification: SpectralClassification,
-    characteristics: PlanetaryCharacteristics
-) -> str:
+# def get_planet_name(
+#     system_classification: SpectralClass,
+#     characteristics: PlanetTraits
+# ) -> str:
 
-    # Maybe we're just tired, but all the code for planets is pretty ugly so far.
-    characteristics_translated = get_characteristics_translated(
-        characteristics)
-    spectral_name = get_spectral_name(system_classification)
+#     # Maybe we're just tired, but all the code for planets is pretty ugly so far.
+#     characteristics_translated = get_characteristics_translated(
+#         characteristics)
+#     spectral_name = get_spectral_name(system_classification)
 
-    name = portmanteaur.get_word(
-        [spectral_name, characteristics_translated.weather],
-        headers=config.get_http_headers()
-    )
+#     name = portmanteaur.get_word(
+#         [spectral_name, characteristics_translated.weather],
+#         headers=config.get_http_headers()
+#     )
 
-    # Apply suffix
-    name += f'-'
-    name += f'{characteristics_translated.sentinels}'
-    name += f'{characteristics_translated.fauna}'
-    name += f'{characteristics_translated.flora}'
+#     # Apply suffix
+#     name += f'-'
+#     name += f'{characteristics_translated.sentinels}'
+#     name += f'{characteristics_translated.fauna}'
+#     name += f'{characteristics_translated.flora}'
 
-    return name
+#     return name

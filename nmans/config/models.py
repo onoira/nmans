@@ -61,28 +61,6 @@ class RangeDict(dict):
 # -------------------------------- Dataclasses ------------------------------- #
 
 @dataclass
-class Genera():
-
-    aer: dict[str, str]
-    aqua: dict[str, str]
-    terra: dict[str, str]
-
-    @classmethod
-    def from_json(cls, d: dict[str, dict]) -> Genera:
-        aer = d.get('aer', {})
-        aqua = d.get('aqua', {})
-        terra = d.get('terra', {})
-        return cls(aer, aqua, terra)
-
-    def to_json(self) -> dict[str, Any]:
-        d = dict()
-        d['aer'] = self.aer
-        d['aqua'] = self.aqua
-        d['terra'] = self.terra
-        return d
-
-
-@dataclass
 class Qualities():
 
     suffices: dict[str, str]
@@ -110,7 +88,6 @@ class Qualities():
 @dataclass
 class Config():
 
-    genera: Genera
     http_from: str
     qualities: Qualities
     spectra: RangeDict[range, dict[str, str]]
@@ -119,14 +96,12 @@ class Config():
 
     @classmethod
     def from_json(cls, d: dict[str, Any]) -> Config:
-        genera = Genera.from_json(d.get('genera', {}))
         http_from = d.get('_http_from', '')
         qualities = Qualities.from_json(d.get('qualities', {}))
         spectra = RangeDict.from_json(d.get('spectra', {}))
         tempers = d.get('tempers', {})
         traits = d.get('traits', {})
         return cls(
-            genera,
             http_from,
             qualities,
             spectra,
@@ -136,7 +111,6 @@ class Config():
 
     def to_json(self) -> dict[str, Any]:
         d = dict()
-        d['genera'] = self.genera.to_json()
         d['_http_from'] = self.http_from
         d['qualities'] = self.qualities.to_json()
         d['spectra'] = self.spectra.to_json()
