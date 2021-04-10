@@ -13,12 +13,13 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
+
 import click
 
 import nmans.config as config
 import nmans._cli as _cli
-from nmans import get_system_name
-from nmans.models import SpectralClass
+from nmans import get_system_name, get_planet_name
+from nmans.models import PlanetQualities, SpectralClass
 
 @click.group()
 def main(): pass
@@ -53,17 +54,17 @@ def planet(
 ):
 
     spectral_class = spectral_class.lower()
-    if not is_valid(spectral_class):
+    if not _cli.is_valid(spectral_class):
         click.echo("Invalid spectral class")
         return -1
 
     weather = _cli.select_weather(weather)
-    sentinels = _cli.select_characteristic(sentinels, subject='sentinels')
-    fauna = _cli.select_characteristic(fauna, subject='fauna')
-    flora = _cli.select_characteristic(flora, subject='flora')
+    sentinels = _cli.select_quality(sentinels, subject='sentinels')
+    fauna = _cli.select_quality(fauna, subject='fauna')
+    flora = _cli.select_quality(flora, subject='flora')
 
-    system_classification = SpectralClassification(spectral_class)
-    characteristics = PlanetaryCharacteristics(
+    class_ = SpectralClass(spectral_class)
+    qualities = PlanetQualities(
         weather,
         sentinels,
         fauna,
@@ -71,7 +72,7 @@ def planet(
     )
 
     click.echo()
-    click.echo(get_planet_name(system_classification, characteristics))
+    click.echo(get_planet_name(class_, qualities))
 
 
 @main.command()

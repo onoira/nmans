@@ -13,12 +13,10 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
-import re
 
 import portmanteaur
-
 from nmans import config
-from nmans.models import PlanetTraits, SpectralClass
+from nmans.models import PlanetQualities, SpectralClass
 
 
 def get_trait_affices(class_: SpectralClass) -> tuple[str]:
@@ -36,15 +34,15 @@ def get_spectral_name(class_: SpectralClass) -> str:
     return config.read_config().spectra[class_.subtype][class_.type]
 
 
-def get_system_name(region: str, classification: SpectralClass) -> str:
+def get_system_name(region: str, class_: SpectralClass) -> str:
 
-    spectral_name = get_spectral_name(classification)
+    spectral_name = get_spectral_name(class_)
     name = portmanteaur.get_word(
         [region, spectral_name],
         headers=config.get_http_headers()
     )
 
-    affices = get_trait_affices(classification)
+    affices = get_trait_affices(class_)
     for idx, affix in enumerate(affices):
         if idx % 2 == 1:
             name = f'{affix}-{name}'
@@ -54,39 +52,35 @@ def get_system_name(region: str, classification: SpectralClass) -> str:
     return name
 
 
-# def get_characteristics_translated(
-#     characteristics: PlanetTraits
-# ) -> PlanetTraits:
+def get_qualities_translated(qualities: PlanetQualities) -> PlanetQualities:
 
-#     characteristics_translated = PlanetTraits.empty()
+    qualities_t = PlanetQualities.empty()
 
-#     characteristics_translated.weather = WEATHER_NAMES[characteristics.weather]
-#     characteristics_translated.sentinels = CHARACTERISTIC_SUFFICES[characteristics.sentinels]
-#     characteristics_translated.fauna = CHARACTERISTIC_SUFFICES[characteristics.fauna]
-#     characteristics_translated.flora = CHARACTERISTIC_SUFFICES[characteristics.flora]
+    _weather = config.read_config().qualities.weather
+    _suffices = config.read_config().qualities.suffices
 
-#     return characteristics_translated
+    qualities_t.weather = _weather[qualities.weather]
+    qualities_t.sentinels = _suffices[qualities.sentinels]
+    qualities_t.fauna = _suffices[qualities.fauna]
+    qualities_t.flora = _suffices[qualities.flora]
+
+    return qualities_t
 
 
-# def get_planet_name(
-#     system_classification: SpectralClass,
-#     characteristics: PlanetTraits
-# ) -> str:
+def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
 
-#     # Maybe we're just tired, but all the code for planets is pretty ugly so far.
-#     characteristics_translated = get_characteristics_translated(
-#         characteristics)
-#     spectral_name = get_spectral_name(system_classification)
+    qualities_t = get_qualities_translated(
+        qualities)
+    spectral_name = get_spectral_name(class_)
 
-#     name = portmanteaur.get_word(
-#         [spectral_name, characteristics_translated.weather],
-#         headers=config.get_http_headers()
-#     )
+    name = portmanteaur.get_word(
+        [spectral_name, qualities_t.weather],
+        headers=config.get_http_headers()
+    )
 
-#     # Apply suffix
-#     name += f'-'
-#     name += f'{characteristics_translated.sentinels}'
-#     name += f'{characteristics_translated.fauna}'
-#     name += f'{characteristics_translated.flora}'
+    name += f'-'
+    name += f'{qualities_t.sentinels}'
+    name += f'{qualities_t.fauna}'
+    name += f'{qualities_t.flora}'
 
-#     return name
+    return name

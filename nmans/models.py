@@ -15,6 +15,19 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+class PlanetQualities:
+
+    @classmethod
+    def empty(_):
+        return PlanetQualities('', '', '', '')
+
+    def __init__(self, weather: str, sentinels: str, fauna: str, flora: str):
+        self.weather: str = weather
+        self.sentinels: str = sentinels
+        self.fauna: str = fauna
+        self.flora: str = flora
+
+
 class SpectralClass:
 
     def __init__(self, spectral_class: str):
@@ -28,16 +41,3 @@ class SpectralClass:
 
     def __str__(self):
         return f'{self.type}{self.subtype}{self.traits}'
-
-
-class PlanetTraits:
-
-    @classmethod
-    def empty(_):
-        return PlanetTraits('', '', '', '')
-
-    def __init__(self, weather: str, sentinels: str, fauna: str, flora: str):
-        self.weather: str = weather
-        self.sentinels: str = sentinels
-        self.fauna: str = fauna
-        self.flora: str = flora

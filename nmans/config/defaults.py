@@ -13,9 +13,61 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from re import M
 from nmans.config.models import RangeDict, Qualities, Config
 
-default_qualities = Qualities.empty()
+default_qualities = Qualities(
+    suffices={
+        'abundant': '',
+        'high': '',
+        'ample': '',
+        'frequent': '',
+        'full': '',
+        'generous': '',
+        'bountiful': '',
+        'copious': '',
+        'rich': '',
+        'numerous': '',
+        'average': '',
+        'regular': '',
+        'common': '',
+        'typical': '',
+        'ordinary': '',
+        'occasional': '',
+        'moderate': '',
+        'fair': '',
+        'medium': '',
+        'low': '',
+        'scarce': '',
+        'infrequent': '',
+        'rare': '',
+        'limited': '',
+        'sporadic': '',
+        'intermittent': '',
+        'uncommon': '',
+        'few': '',
+        'sparse': '',
+        'none': '',
+        'deficient': '',
+        'undetected': '',
+        'lacking': '',
+        'absent': '',
+        'nonexistent': '',
+        'empty': '',
+        'devoid': '',
+        'barren': '',
+        'lost': ''
+    },
+    weather={
+        # There are:
+        #
+        #   279 documented weather types; of which there are:
+        #   ~170 unique modifiers, and
+        #   ~145 unique descriptions.
+        #
+        # Just fill them out as you discover them.
+    }
+)
 
 default_spectra = RangeDict({
     range(0, 2): {

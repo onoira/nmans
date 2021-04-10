@@ -19,6 +19,7 @@ from nmans import config
 from nmans import exceptions
 
 from nmans._nmans import get_system_name
+from nmans._nmans import get_planet_name
 
 
 def get_version() -> tuple[int]:

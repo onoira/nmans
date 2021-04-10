@@ -69,7 +69,7 @@ def read_config() -> Config:
                 f"unable to load config (falling back to defaults): {e}",
                 NmansConfigWarning
             )
-            return default_config
+            config = default_config
     return config
 
 
