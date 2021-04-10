@@ -14,12 +14,16 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+import pprint
+
 import click
+import jsons
 
 import nmans.config as config
 import nmans._cli as _cli
 from nmans import get_system_name, get_planet_name
 from nmans.models import PlanetQualities, SpectralClass
+
 
 @click.group()
 def main(): pass
@@ -80,8 +84,10 @@ def planet(
 def list_config(reflow: bool = False):
     if reflow:
         config.write_config()
-    from pprint import pprint
-    pprint(config.read_config().to_json())
+    click.echo(pprint.pformat(
+        jsons.dump(config.read_config()),
+        sort_dicts=False
+    ))
 
 
 if __name__ == '__main__':

@@ -13,18 +13,28 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Union
+
 import json
 import os
 import warnings
 from pathlib import Path
 from functools import lru_cache
 
+import jsons
 from portmanteaur import default_headers, default_user_agent
 
 from nmans import __name__, __version__
 from nmans.config.defaults import default_config
 from nmans.config.exceptions import NmansConfigWarning
 from nmans.config.models import Config
+
+
+def _range_deserializer(obj: list[int], cls: range, **_) -> range:
+    return cls(*obj)
+
+
+jsons.set_deserializer(_range_deserializer, range)
 
 
 @lru_cache(None)
@@ -42,11 +52,13 @@ def write_config(config: Config = None) -> None:
         config = read_config()
     p = _get_config_path()
     with open(p, 'w') as fp:
-        json.dump(
-            config.to_json(), fp,
-            ensure_ascii=False,
-            indent=2
-        )
+        fp.write(jsons.dumps(
+            config,
+            jdkwargs={
+                'indent': 2,
+                'ensure_ascii': False
+            }
+        ))
 
 
 @lru_cache(None)
@@ -62,14 +74,14 @@ def read_config() -> Config:
     else:
         try:
             with open(p, 'r') as fp:
-                d = json.load(fp)
-            config = Config.from_json(d)
-        except json.decoder.JSONDecodeError as e:
+                config = jsons.loads(fp.read(), cls=Config)
+        except (json.decoder.JSONDecodeError, jsons.DecodeError) as e:
             warnings.warn(
                 f"unable to load config (falling back to defaults): {e}",
                 NmansConfigWarning
             )
             config = default_config
+
     return config
 
 

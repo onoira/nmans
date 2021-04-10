@@ -15,17 +15,24 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import re
+from pprint import PrettyPrinter
+
 import click
+import jsons
+
 import nmans.config as config
+
 
 _T_WORDMAP = dict[str, str]
 _T_OPTIONS = tuple[_T_WORDMAP, _T_WORDMAP]
 
 _SUFFIX_OPTIONS = dict(
-    [(str(idx), i[0]) for idx, i in enumerate(config.read_config().qualities.suffices.items()) if i[1]]
+    [(str(idx), i[0]) for idx, i in enumerate(
+        config.read_config().qualities.suffices.items()) if i[1]]
 )
 _WEATHER_OPTIONS = dict(
-    [(str(idx), k) for idx, (k, v) in enumerate(config.read_config().qualities.weather.items()) if v]
+    [(str(idx), k) for idx, (k, v) in enumerate(
+        config.read_config().qualities.weather.items()) if v]
 )
 
 _re_spectral_class = re.compile(

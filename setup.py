@@ -7,6 +7,7 @@ PACKAGE = 'nmans'
 
 REQUIRED = [
     'click',
+    'jsons>=1.4.2',  # https://github.com/ramonhagenaars/jsons/issues/133
     'portmanteaur @ git+https://github.com/onoira/portmanteaur',
 ]
 EXTRAS = {}
