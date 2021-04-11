@@ -37,6 +37,13 @@ def _range_deserializer(obj: list[int], cls: range, **_) -> range:
 jsons.set_deserializer(_range_deserializer, range)
 
 
+def _range_serializer(obj: range, **_) -> list[int]:
+    return list((obj.start, obj.stop))
+
+
+jsons.set_serializer(_range_serializer, range)
+
+
 @lru_cache(None)
 def _get_config_path():
     p: Path
