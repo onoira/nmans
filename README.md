@@ -17,6 +17,11 @@ Empty files are ignored with the defaults (noted by a warning), and all configs 
     python3 -m pip install -e .
     ./run_tests.sh
 
+Refer to the schema when testing configuration setups:
+
+    python3 -m install -e ".[Validation]"
+    validate.py path/to/config.json
+
 ## License
 
 [AGPLv3](LICENSE)

@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
+from typing import Optional
 
 from dataclasses import dataclass
 
@@ -47,7 +48,7 @@ class Qualities():
 @dataclass
 class Config():
 
-    http_from: str
+    http_from: Optional[str]
     qualities: Qualities
     spectra: RangeDict[range, dict[str, str]]
     tempers: dict[str, str]

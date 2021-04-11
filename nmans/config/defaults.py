@@ -200,7 +200,7 @@ default_traits = {
 }
 
 default_config = Config(
-    http_from='',
+    http_from=None,
     qualities=default_qualities,
     spectra=default_spectra,
     tempers=default_tempers,
