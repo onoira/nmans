@@ -1,0 +1,129 @@
+{
+  "definitions": {
+    "affixDef": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z]+$": {
+          "type": "string"
+        }
+      }
+    },
+    "hashedKeyDef": {
+      "type": "array",
+      "minItems": 2,
+      "items": [
+        {
+          "type": "integer"
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "qualities",
+    "spectra",
+    "tempers",
+    "traits"
+  ],
+  "properties": {
+    "http_from": {
+      "description": "Email address sent in the request header to portmanteaur.com (optional)",
+      "type": [
+        "string",
+        "null"
+      ],
+      "examples": [
+        "jane@example.com"
+      ],
+      "pattern": "^.*$"
+    },
+    "qualities": {
+      "type": "object",
+      "description": "Planetary attributes",
+      "required": [
+        "suffices",
+        "weather"
+      ],
+      "properties": {
+        "suffices": {
+          "$ref": "#/definitions/affixDef",
+          "description": "A suffix mapped to the sentinel / fauna / flora adjectives."
+        },
+        "weather": {
+          "$ref": "#/definitions/affixDef",
+          "description": "Words mapped to weather types. These are mashed with the system deity to form the root name of the planet."
+        }
+      }
+    },
+    "spectra": {
+      "description": "The star system classification and associated deities / suffices.",
+      "type": "object",
+      "required": [
+        "-keys"
+      ],
+      "properties": {
+        "-keys": {
+          "description": "Numerical arguments passed to a Python3 `range` constructor.",
+          "type": "object",
+          "patternProperties": {
+            "^-?[0-9]+$": {
+              "$ref": "#/definitions/hashedKeyDef"
+            }
+          }
+        },
+        "patternProperties": {
+          "^-?[0-9]+": {
+            "title": "Spectrum",
+            "description": "All main types (props) for a range of subtypes (key).",
+            "type": "object",
+            "required": [
+              "o",
+              "b",
+              "a",
+              "f",
+              "g",
+              "k",
+              "m",
+              "l",
+              "t",
+              "y",
+              "e"
+            ],
+            "patternProperties": {
+              "^[obafgkmltye]$": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tempers": {
+      "$ref": "#/definitions/affixDef",
+      "description": "Fauna temperaments and their associated deity."
+    },
+    "traits": {
+      "description": "Stellar 'peculiarity codes' and their configured suffix.",
+      "type": "object",
+      "required": [
+        "e",
+        "f",
+        "h",
+        "k",
+        "m",
+        "n",
+        "p",
+        "q",
+        "s",
+        "v",
+        "w"
+      ],
+      "patternProperties": {
+        "^[efhkmnpqsvw]$": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
