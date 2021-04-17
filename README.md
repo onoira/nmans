@@ -4,6 +4,14 @@ Tool to automate naming of discoveries in _No Man's Sky_ using [Odin's conventio
 
 [0]: https://www.odingaming.com/2018/01/15/no-mans-sky-naming-convention/ "No Man’s Sky Naming Convention – Odin’s Convention"
 
+## Requirements
+
+- `click`
+- `jsons (>= 1.4.2)`
+- [github/onoira/portmanteaur](https://github.com/onoira/portmanteaur)
+
+`jsonschema` is also required for schema validation.
+
 ## Usage
 
 See `nmans --help` for more details.
