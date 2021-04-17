@@ -2,14 +2,14 @@
 
 ## 1.0
 
-- [ ] Name generation:
+- [x] Name generation:
   - [x] Systems
   - [x] Planets
-  - [ ] Fauna
-- [ ] Testing
-- [ ] Configuration
+  - [x] Fauna
+- [x] Testing
+- [x] Configuration
   - [x] Schema
-  - [ ] Schema documentation (titles / descriptions)
+  - [x] Schema documentation (titles / descriptions)
   - [x] Validation
   - [x] Templates
   - [x] Environment variable
