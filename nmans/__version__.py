@@ -1,4 +1,4 @@
-VERSION = (0, 1, 0)
+VERSION = (1, 0, 0)
 PYTHON_REQUIRES = '>=3.9.0'
 
 __title__ = "nmans"
