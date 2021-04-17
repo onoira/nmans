@@ -15,46 +15,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import re
-from pprint import PrettyPrinter
-
 import click
-import jsons
-
 import nmans.config as config
 
 
 _T_WORDMAP = dict[str, str]
 _T_OPTIONS = tuple[_T_WORDMAP, _T_WORDMAP]
 
-_SUFFIX_OPTIONS = dict(
-    [(str(idx), i[0]) for idx, i in enumerate(
-        config.read_config().qualities.suffices.items()) if i[1]]
-)
-_WEATHER_OPTIONS = dict(
-    [(str(idx), k) for idx, (k, v) in enumerate(
-        config.read_config().qualities.weather.items()) if v]
-)
 
-_re_spectral_class = re.compile(
-    r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
-    re.IGNORECASE
-)
-
-
-def _validate_option(option: str, options: _T_OPTIONS, prompt: str) -> str:
-
-    _options, _names = options
-    if option.isdigit() and option in _options.keys():
-        return _options[option]
-    elif option in _names.keys():
-        return option
-    else:
-        click.echo(f'Invalid {prompt} option')
-        return _select_option(None, options, prompt, expose_options=True)
-
-
-def is_valid(spectral_class: str) -> bool:
-    return _re_spectral_class.match(spectral_class)
+def _build_options(d): return dict([(str(idx), k)
+                                    for idx, (k, v) in enumerate(d.items()) if v])
 
 
 def _select_option(
@@ -64,36 +34,100 @@ def _select_option(
     expose_options: bool
 ) -> str:
 
-    _options, _ = options
+    _options, _names = options
 
-    if expose_options:
-        click.echo()
-        for k, v in _options.items():
-            click.echo(f'[{k}] {v}')
-        click.echo()
+    def _validate_option() -> str:
+        if not option:
+            return str()
+        if option.isdigit() and option in _options.keys():
+            return _options[option]
+        elif option in _names.keys():
+            return option
+        else:
+            click.echo(f'Invalid {prompt}')
+            return str()
 
-    if not option:
-        option: str = click.prompt(f'{prompt.title()} (?)')
+    option_valid = False
+    while not option_valid:
+        if expose_options:
+            click.echo()
+            for k, v in _options.items():
+                s = f'[{k}] {v}'
+                name = _names.get(v, '')
+                s += f' ({name})' if name else ''
+                click.echo(s)
+            click.echo()
+            expose_options = False
 
-    if option == '?':
-        return _select_option(None, options, prompt, expose_options=True)
+        if not option:
+            option = click.prompt(f'{prompt.title()} (?)')
+        else:
+            # This is only possible on first entry.
+            expose_options = True
 
-    return _validate_option(option, options, prompt)
+        if option == '?':
+            expose_options = True
+            option = ''
+
+        option_valid = bool(option := _validate_option())
+
+    return option
 
 
-def select_quality(option: str, subject: str):
+def is_valid(spectral_class: str) -> bool:
+    re_spectral_class = re.compile(
+        r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
+        re.IGNORECASE
+    )
+    return re_spectral_class.match(spectral_class)
+
+
+def select_quality(option: str, subject: str) -> str:
+    options = _build_options(config.read_config().qualities.suffices)
     return _select_option(
         option,
-        options=(_SUFFIX_OPTIONS, config.read_config().qualities.suffices),
+        options=(options, config.read_config().qualities.suffices),
         prompt=subject,
         expose_options=False
     )
 
 
-def select_weather(option: str):
+def select_weather(option: str) -> str:
+    options = _build_options(config.read_config().qualities.weather)
     return _select_option(
         option,
-        options=(_WEATHER_OPTIONS, config.read_config().qualities.weather),
+        options=(options, config.read_config().qualities.weather),
         prompt='weather',
+        expose_options=False
+    )
+
+
+def select_habitat(option: str) -> str:
+    options = dict([(str(idx), k)
+                    for idx, k in enumerate(config.const.GENERA.keys())])
+    return _select_option(
+        option,
+        options=(options, dict((v, None) for _,v in options.items())),
+        prompt='habitat',
+        expose_options=not option
+    )
+
+
+def select_genus(option: str, category: str) -> str:
+    options = _build_options(config.const.GENERA[category])
+    return _select_option(
+        option,
+        options=(options, config.const.GENERA[category]),
+        prompt='genus',
+        expose_options=False
+    )
+
+
+def select_temper(option: str) -> str:
+    options = _build_options(config.read_config().tempers)
+    return _select_option(
+        option,
+        options=(options, config.read_config().tempers),
+        prompt='temper',
         expose_options=False
     )

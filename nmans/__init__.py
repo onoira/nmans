@@ -5,7 +5,9 @@ __all__ = [
     'models',
     'config',
     'exceptions',
-    'get_system_name'
+    'get_system_name',
+    'get_planet_name',
+    'get_fauna_name',
 ]
 
 from nmans.__version__ import __author__
@@ -20,6 +22,7 @@ from nmans import exceptions
 
 from nmans._nmans import get_system_name
 from nmans._nmans import get_planet_name
+from nmans._nmans import get_fauna_name
 
 
 def get_version() -> tuple[int]:

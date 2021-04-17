@@ -21,7 +21,7 @@ import jsons
 
 import nmans.config as config
 import nmans._cli as _cli
-from nmans import get_system_name, get_planet_name
+from nmans import get_system_name, get_planet_name, get_fauna_name
 from nmans.models import PlanetQualities, SpectralClass
 
 
@@ -51,10 +51,10 @@ def system(region: str, spectral_class: str):
 @click.option('--flora')
 def planet(
     spectral_class: str,
-    weather: str = str(),
-    sentinels: str = str(),
-    fauna: str = str(),
-    flora: str = str()
+    weather=str(),
+    sentinels=str(),
+    fauna=str(),
+    flora=str()
 ):
 
     spectral_class = spectral_class.lower()
@@ -77,6 +77,23 @@ def planet(
 
     click.echo()
     click.echo(get_planet_name(class_, qualities))
+
+
+@main.command()
+@click.option('--habitat')
+@click.option('--genus')
+@click.option('--temper')
+def fauna(
+    habitat=str(),
+    genus=str(),
+    temper=str()
+):
+
+    habitat = _cli.select_habitat(habitat)
+    genus = _cli.select_genus(genus, habitat)
+    temper = _cli.select_temper(temper)
+
+    click.echo(get_fauna_name(genus, temper))
 
 
 @main.command()

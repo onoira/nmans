@@ -84,3 +84,8 @@ def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
     name += f'{qualities_t.flora}'
 
     return name
+
+
+def get_fauna_name(genus: str, temper: str) -> str:
+    deity = config.read_config().tempers[temper]
+    return f"{genus.title()} {deity} [Planet]"
