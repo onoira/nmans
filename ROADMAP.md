@@ -24,4 +24,3 @@
 
 - [ ] Name generation:
   - [ ] Waypoint
-- [ ] Documentation
