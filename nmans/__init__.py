@@ -5,6 +5,9 @@ __all__ = [
     'models',
     'config',
     'exceptions',
+    'get_trait_affices',
+    'get_spectral_name',
+    'get_qualities_translated',
     'get_system_name',
     'get_planet_name',
     'get_fauna_name',
@@ -20,6 +23,9 @@ from nmans import models
 from nmans import config
 from nmans import exceptions
 
+from nmans._nmans import get_trait_affices
+from nmans._nmans import get_spectral_name
+from nmans._nmans import get_qualities_translated
 from nmans._nmans import get_system_name
 from nmans._nmans import get_planet_name
 from nmans._nmans import get_fauna_name

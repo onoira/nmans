@@ -20,13 +20,9 @@ from nmans.models import PlanetQualities, SpectralClass
 
 
 def get_trait_affices(class_: SpectralClass) -> tuple[str]:
-    if class_.traits == str():
-        return tuple()
-
     affices = list()
     for trait_code in class_.traits:
         affices.append(config.read_config().traits[trait_code])
-
     return tuple(affices)
 
 
@@ -69,8 +65,7 @@ def get_qualities_translated(qualities: PlanetQualities) -> PlanetQualities:
 
 def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
 
-    qualities_t = get_qualities_translated(
-        qualities)
+    qualities_t = get_qualities_translated(qualities)
     spectral_name = get_spectral_name(class_)
 
     name = portmanteaur.get_word(

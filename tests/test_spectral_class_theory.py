@@ -1,5 +1,4 @@
 import os
-import re
 import unittest
 from unittest.mock import Mock, patch
 
@@ -10,13 +9,6 @@ from nmans.models import SpectralClass
 @unittest.skipIf('NMANS_THEORY' not in os.environ.keys(), 'hypothetical')
 class TestSpectralClassificationTheory(unittest.TestCase):
 
-    @patch(
-        'nmans._nmans._RE_SYSTEM_CLASSIFICATION',
-        re.compile(
-            r'^[obafgkmltye][0-9][efhkmnpqsvw]*$',
-            re.IGNORECASE
-        )
-    )
     @patch('nmans._nmans.portmanteaur')
     def test_system_name_multiple_traits(self, _: Mock):
         class_ = SpectralClass('o0pqpq')
