@@ -13,12 +13,13 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from __future__ import annotations
 
 
 class PlanetQualities:
 
     @classmethod
-    def empty(_):
+    def empty(_) -> PlanetQualities:
         return PlanetQualities('', '', '', '')
 
     def __init__(self, weather: str, sentinels: str, fauna: str, flora: str):
@@ -39,5 +40,5 @@ class SpectralClass:
         else:
             self.traits = str()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.type}{self.subtype}{self.traits}'

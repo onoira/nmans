@@ -3,10 +3,11 @@ from unittest.mock import Mock, patch
 
 import nmans
 from nmans.config import defaults
+from nmans.config.models import Config
 from nmans.models import PlanetQualities
 
 
-def read_config():
+def read_config() -> Config:
     config = defaults.default_config
     config.qualities.weather = {'foo': 'bar'}
     config.qualities.suffices = {
@@ -20,7 +21,7 @@ def read_config():
 @patch('nmans._nmans.config.read_config', read_config)
 class TestQualities(unittest.TestCase):
 
-    def test_qualities_translated(self):
+    def test_qualities_translated(self) -> None:
         qualities = PlanetQualities('foo', 'dead', '1bad', 'baad')
         result = nmans.get_qualities_translated(qualities)
         self.assertEqual('bar', result.weather)

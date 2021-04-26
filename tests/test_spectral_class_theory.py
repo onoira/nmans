@@ -10,7 +10,7 @@ from nmans.models import SpectralClass
 class TestSpectralClassificationTheory(unittest.TestCase):
 
     @patch('nmans._nmans.portmanteaur')
-    def test_system_name_multiple_traits(self, _: Mock):
+    def test_system_name_multiple_traits(self, _: Mock) -> None:
         class_ = SpectralClass('o0pqpq')
         result = nmans.get_system_name('region', class_)
         self.assertEqual(5, len(result.split('-')))

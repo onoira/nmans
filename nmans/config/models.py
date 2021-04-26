@@ -13,27 +13,31 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
-from typing import Optional
+from typing import Any, Optional, Sequence, TypeVar, Union
 
 from dataclasses import dataclass
 
 
 # ----------------------------------- Types ---------------------------------- #
 
-class RangeDict(dict):
+_KT = TypeVar("_KT", range, Sequence[int])
+_VT = TypeVar("_VT")
+
+
+class RangeDict(dict[_KT, _VT]):
     """Dictionary supporting numerical ranges for keys
 
     Overlapping ranges are FIFO.
     """
 
-    def __getitem__(self, item):
-        if not isinstance(item, range):
+    def __getitem__(self, k: Union[int, Any]) -> _VT:
+        if isinstance(k, int):
             for key in self:
-                if item in key:
+                if k in key:
                     return self[key]
-            raise KeyError(item)
+            raise KeyError(k)
         else:
-            return super().__getitem__(item)
+            return super().__getitem__(k)
 
 
 # -------------------------------- Dataclasses ------------------------------- #

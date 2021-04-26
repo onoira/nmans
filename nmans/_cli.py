@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import re
+
 import click
 import nmans.config as config
 
@@ -23,8 +24,8 @@ _T_WORDMAP = dict[str, str]
 _T_OPTIONS = tuple[_T_WORDMAP, _T_WORDMAP]
 
 
-def _build_options(d): return dict([(str(idx), k)
-                                    for idx, (k, v) in enumerate(d.items()) if v])
+def _build_options(d: _T_WORDMAP) -> _T_WORDMAP:
+    return dict([(str(idx), k) for idx, (k, v) in enumerate(d.items()) if v])
 
 
 def _select_option(
@@ -79,7 +80,7 @@ def is_valid(spectral_class: str) -> bool:
         r'^[obafgkmltye][0-9][efhkmnpqsvw]{,2}$',
         re.IGNORECASE
     )
-    return re_spectral_class.match(spectral_class)
+    return re_spectral_class.match(spectral_class) is not None
 
 
 def select_quality(option: str, subject: str) -> str:
@@ -107,7 +108,7 @@ def select_habitat(option: str) -> str:
                     for idx, k in enumerate(config.const.GENERA.keys())])
     return _select_option(
         option,
-        options=(options, dict((v, None) for _,v in options.items())),
+        options=(options, dict((v, '') for _, v in options.items())),
         prompt='habitat',
         expose_options=not option
     )

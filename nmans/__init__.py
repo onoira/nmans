@@ -1,6 +1,10 @@
 """nmans - Automate naming of discoveries in No Man's Sky"""
 
 __all__ = [
+    '__author__',
+    '__author_email__',
+    '__license__',
+    '__version__',
     'get_version',
     'models',
     'config',
@@ -31,5 +35,5 @@ from nmans._nmans import get_planet_name
 from nmans._nmans import get_fauna_name
 
 
-def get_version() -> tuple[int]:
+def get_version() -> tuple[int, int, int]:
     return __VERSION

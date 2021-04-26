@@ -3,6 +3,7 @@
 import json
 import os.path as path
 import sys
+from typing import Any
 
 import jsonschema
 import jsonschema.exceptions as jsonexceptions
@@ -14,11 +15,11 @@ filepath = path.abspath(sys.argv[1])
 if not path.exists(filepath):
     print(f"No such file '{filepath}'")
 
-schema: dict
+schema: dict[Any, Any]
 with open('schema.json', 'r') as fp:
     schema = json.load(fp)
 
-datum: dict
+datum: dict[Any, Any]
 try:
     with open(filepath, 'r') as fp:
         datum = json.load(fp)

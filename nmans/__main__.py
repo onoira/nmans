@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import pprint
+import sys
 
 import click
 import jsons
@@ -26,18 +27,18 @@ from nmans.models import PlanetQualities, SpectralClass
 
 
 @click.group()
-def main(): pass
+def main() -> None: pass
 
 
 @main.command()
 @click.argument('region')
 @click.argument('spectral-class')
-def system(region: str, spectral_class: str):
+def system(region: str, spectral_class: str) -> None:
 
     spectral_class = spectral_class.lower()
     if not _cli.is_valid(spectral_class):
         click.echo("Invalid spectral class")
-        return -1
+        sys.exit(1)
 
     class_ = SpectralClass(spectral_class)
     click.echo(get_system_name(region, class_))
@@ -51,16 +52,16 @@ def system(region: str, spectral_class: str):
 @click.option('--flora')
 def planet(
     spectral_class: str,
-    weather=str(),
-    sentinels=str(),
-    fauna=str(),
-    flora=str()
-):
+    weather: str = str(),
+    sentinels: str = str(),
+    fauna: str = str(),
+    flora: str = str()
+) -> None:
 
     spectral_class = spectral_class.lower()
     if not _cli.is_valid(spectral_class):
         click.echo("Invalid spectral class")
-        return -1
+        sys.exit(1)
 
     weather = _cli.select_weather(weather)
     sentinels = _cli.select_quality(sentinels, subject='sentinels')
@@ -84,10 +85,10 @@ def planet(
 @click.option('--genus')
 @click.option('--temper')
 def fauna(
-    habitat=str(),
-    genus=str(),
-    temper=str()
-):
+    habitat: str = str(),
+    genus: str = str(),
+    temper: str = str()
+) -> None:
 
     habitat = _cli.select_habitat(habitat)
     genus = _cli.select_genus(genus, habitat)
@@ -98,7 +99,7 @@ def fauna(
 
 @main.command()
 @click.option('--reflow', is_flag=True)
-def list_config(reflow: bool = False):
+def list_config(reflow: bool = False) -> None:
     if reflow:
         config.write_config()
     click.echo(pprint.pformat(

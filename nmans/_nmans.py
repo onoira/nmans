@@ -19,7 +19,7 @@ from nmans import config
 from nmans.models import PlanetQualities, SpectralClass
 
 
-def get_trait_affices(class_: SpectralClass) -> tuple[str]:
+def get_trait_affices(class_: SpectralClass) -> tuple[str, ...]:
     affices = list()
     for trait_code in class_.traits:
         affices.append(config.read_config().traits[trait_code])
@@ -33,7 +33,7 @@ def get_spectral_name(class_: SpectralClass) -> str:
 def get_system_name(region: str, class_: SpectralClass) -> str:
 
     spectral_name = get_spectral_name(class_)
-    name = portmanteaur.get_word(
+    name: str = portmanteaur.get_word(
         [region, spectral_name],
         headers=config.get_http_headers()
     )
@@ -68,7 +68,7 @@ def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
     qualities_t = get_qualities_translated(qualities)
     spectral_name = get_spectral_name(class_)
 
-    name = portmanteaur.get_word(
+    name: str = portmanteaur.get_word(
         [spectral_name, qualities_t.weather],
         headers=config.get_http_headers()
     )

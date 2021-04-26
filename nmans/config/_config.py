@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from typing import Union
+from typing import Any, Optional
 
 import json
 import os
@@ -30,14 +30,14 @@ from nmans.config.exceptions import NmansConfigWarning
 from nmans.config.models import Config
 
 
-def _range_deserializer(obj: list[int], cls: range, **_) -> range:
-    return cls(*obj)
+def _range_deserializer(obj: list[int], _: range, **__: Any) -> range:
+    return range(*obj)
 
 
 jsons.set_deserializer(_range_deserializer, range)
 
 
-def _range_serializer(obj: range, **_) -> list[int]:
+def _range_serializer(obj: range, **_: Any) -> list[int]:
     return list((obj.start, obj.stop))
 
 
@@ -45,16 +45,16 @@ jsons.set_serializer(_range_serializer, range)
 
 
 @lru_cache(None)
-def _get_config_path():
+def _get_config_path() -> Path:
     p: Path
-    if p := os.environ.get('NMANS_PATH', None):
-        p = os.path.expanduser(p)
+    if _p := os.environ.get('NMANS_PATH', ''):
+        p = Path(os.path.expanduser(_p))
     else:
         p = Path(os.environ['HOME']) / '.config' / __name__ / 'config.json'
     return p
 
 
-def write_config(config: Config = None) -> None:
+def write_config(config: Optional[Config] = None) -> None:
     if not config:
         config = read_config()
     p = _get_config_path()
@@ -93,11 +93,12 @@ def read_config() -> Config:
 
 
 @lru_cache(None)
-def get_http_headers():
+def get_http_headers() -> dict[str, str]:
     headers = {
         **default_headers,
         'User-Agent': f'{default_user_agent} {__name__}/{__version__} '
     }
-    if read_config().http_from:
-        headers['From'] = read_config().http_from
+    http_from = read_config().http_from
+    if http_from is not None:
+        headers['From'] = http_from
     return headers
