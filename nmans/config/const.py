@@ -9,7 +9,7 @@ GENERA = {
     },
     'aqua': {
         'bosaquatica': 'crustacean',
-        'chrysaora': 'meusozoans',
+        'chrysaora': 'medusozoans',
         'ictaloris': 'actinopyterygian',
         'prionace': 'selachimorph',
         'prionacefda': 'bovine (swimming)',
