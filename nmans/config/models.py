@@ -1,4 +1,4 @@
-# Copyright (C) 2021 <onoira@psiko.zone>
+# Copyright (C) 2021 – 2022 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
+from functools import lru_cache
 from typing import Any, Optional, Sequence, TypeVar, Union
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 
 # ----------------------------------- Types ---------------------------------- #
@@ -42,11 +43,36 @@ class RangeDict(dict[_KT, _VT]):
 
 # -------------------------------- Dataclasses ------------------------------- #
 
+
 @dataclass
 class Qualities():
 
     suffices: dict[str, str]
     weather: dict[str, str]
+
+
+@dataclass
+class Waypoints():
+
+    @dataclass
+    class WaypointCategory():
+
+        theme: str
+        prefices: dict[str, str]
+
+    alien: Waypoints.WaypointCategory
+    outpost: Waypoints.WaypointCategory
+    transmission: Waypoints.WaypointCategory
+    shelter: Waypoints.WaypointCategory
+    beacon: Waypoints.WaypointCategory
+
+    @classmethod
+    @lru_cache(None)
+    def get_options(cls) -> dict[str, str]:
+        return {field: field for field in cls.__dataclass_fields__}
+
+    def asdict(self) -> dict[str, Waypoints.WaypointCategory]:
+     return {k: Waypoints.WaypointCategory(v['theme'], v['prefices']) for k,v in asdict(self).items()}
 
 
 @dataclass
@@ -57,3 +83,4 @@ class Config():
     spectra: RangeDict[range, dict[str, str]]
     tempers: dict[str, str]
     traits: dict[str, str]
+    waypoints: Optional[Waypoints]

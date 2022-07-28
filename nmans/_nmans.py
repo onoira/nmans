@@ -1,5 +1,5 @@
 """_nmans - Package internals"""
-# Copyright (C) 2021 <onoira@psiko.zone>
+# Copyright (C) 2021 – 2022 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -84,3 +84,11 @@ def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
 def get_fauna_name(genus: str, temper: str) -> str:
     deity = config.read_config().tempers[temper]
     return f"{genus.title()} {deity} [Planet]"
+
+
+def get_waypoint_name(category: str, variant: str, theme: str) -> str:
+    return f"{get_variant_translated(category, variant)}-({theme})"
+
+
+def get_variant_translated(category: str, variant: str) -> str:
+    return config.read_config().waypoints.asdict()[category].prefices[variant]

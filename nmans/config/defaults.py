@@ -1,4 +1,4 @@
-# Copyright (C) 2021 <onoira@psiko.zone>
+# Copyright (C) 2021 – 2022 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -13,8 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from re import M
-from nmans.config.models import RangeDict, Qualities, Config
+from nmans.config.models import RangeDict, Qualities, Config, Waypoints
 
 default_qualities = Qualities(
     suffices={
@@ -199,10 +198,59 @@ default_traits = {
     'w': ''
 }
 
+default_waypoints = Waypoints(
+    alien=Waypoints.WaypointCategory(
+        theme="",
+        prefices={
+            'monolith': "",
+            'plaque': "",
+            'ruin': "",
+            'boundary failure': "",
+            'portal': ""
+        }
+    ),
+    outpost=Waypoints.WaypointCategory(
+        theme="",
+        prefices={
+            'trading post': "",
+            'manufacturing facility': "",
+            'operations centre': ""
+        }
+    ),
+    transmission=Waypoints.WaypointCategory(
+        theme="",
+        prefices={
+            'beacon': "",
+            'holographic comms tower': "",
+            'crashed ship': "",
+            'crashed freighter': ""
+        }
+    ),
+    shelter=Waypoints.WaypointCategory(
+        theme="",
+        prefices={
+            'drop pod': "",
+            'observatory': "",
+            'abandoned building': "",
+            'camp': "",
+            'transmission tower': ""
+        }
+    ),
+    beacon=Waypoints.WaypointCategory(
+        theme="",
+        prefices={
+            'debris': "",
+            'depot': "",
+            'galactic trade terminal': ""
+        }
+    )
+)
+
 default_config = Config(
     http_from=None,
     qualities=default_qualities,
     spectra=default_spectra,
     tempers=default_tempers,
-    traits=default_traits
+    traits=default_traits,
+    waypoints=default_waypoints
 )

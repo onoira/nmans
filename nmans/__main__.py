@@ -1,5 +1,5 @@
 """__main__ - CLI application for automating the naming of discoveries in No Man's Sky"""
-# Copyright (C) 2021 <onoira@psiko.zone>
+# Copyright (C) 2021 – 2022 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -22,7 +22,7 @@ import jsons
 
 import nmans.config as config
 import nmans._cli as _cli
-from nmans import get_system_name, get_planet_name, get_fauna_name
+from nmans import get_system_name, get_planet_name, get_fauna_name, get_waypoint_name
 from nmans.models import PlanetQualities, SpectralClass
 
 
@@ -98,12 +98,35 @@ def fauna(
 
 
 @main.command()
+@click.option('--category')
+@click.option('--variant')
+def waypoint(
+    category: str = str(),
+    variant: str = str()
+) -> None:
+
+    if config.read_config().waypoints is None:
+        raise click.ClickException("No waypoints defined in config.")
+
+    category = _cli.select_waypoint_category(category)
+    variant, theme = _cli.select_waypoint_variant(variant, category)
+
+    click.echo(get_waypoint_name(category, variant, theme))
+
+
+@main.command()
 @click.option('--reflow', is_flag=True)
-def list_config(reflow: bool = False) -> None:
+@click.option('--default', is_flag=True)
+def list_config(reflow: bool = False, default: bool = False) -> None:
     if reflow:
         config.write_config()
+    if default:
+        import nmans.config.defaults as config_defaults
+        _config = config_defaults.default_config
+    else:
+        _config = config.read_config()
     click.echo(pprint.pformat(
-        jsons.dump(config.read_config()),
+        jsons.dump(_config),
         sort_dicts=False
     ))
 

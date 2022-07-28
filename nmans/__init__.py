@@ -15,6 +15,7 @@ __all__ = [
     'get_system_name',
     'get_planet_name',
     'get_fauna_name',
+    'get_waypoint_name'
 ]
 
 from nmans.__version__ import __author__
@@ -33,6 +34,7 @@ from nmans._nmans import get_qualities_translated
 from nmans._nmans import get_system_name
 from nmans._nmans import get_planet_name
 from nmans._nmans import get_fauna_name
+from nmans._nmans import get_waypoint_name
 
 
 def get_version() -> tuple[int, int, int]:

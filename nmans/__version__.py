@@ -1,8 +1,8 @@
-VERSION = (1, 0, 1)
+VERSION = (1, 1, 0)
 PYTHON_REQUIRES = '>=3.9.0'
 
 __title__ = "nmans"
-__author__ = "Onoira"
+__author__ = "onoira"
 __author_email__ = "onoira@psiko.zone"
 __description__ = ""
 __license__ = "AGPL"

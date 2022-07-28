@@ -81,7 +81,7 @@ def read_config() -> Config:
     else:
         try:
             with open(p, 'r') as fp:
-                config = jsons.loads(fp.read(), cls=Config)
+                config = jsons.loads(fp.read(), cls=Config, strict=False)
         except (json.decoder.JSONDecodeError, jsons.DecodeError) as e:
             warnings.warn(
                 f"unable to load config (falling back to defaults): {e}",

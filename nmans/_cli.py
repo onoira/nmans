@@ -1,5 +1,5 @@
 """_cli - CLI helpers"""
-# Copyright (C) 2021 <onoira@psiko.zone>
+# Copyright (C) 2021 – 2022 <onoira@psiko.zone>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -132,3 +132,24 @@ def select_temper(option: str) -> str:
         prompt='temper',
         expose_options=False
     )
+
+
+def select_waypoint_category(option: str) -> str:
+    options = _build_options(config.models.Waypoints.get_options())
+    return _select_option(
+        option,
+        options=(options, config.models.Waypoints.get_options()),
+        prompt='category',
+        expose_options=False
+    )
+
+
+def select_waypoint_variant(option: str, category: str) -> tuple[str, str]:
+    _category = config.read_config().waypoints.asdict()[category]
+    options = _build_options(_category.prefices)
+    return (_select_option(
+        option,
+        options=(options, _category.prefices),
+        prompt='variant',
+        expose_options=False
+    ), _category.theme)

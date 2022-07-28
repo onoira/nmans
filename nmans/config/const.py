@@ -36,6 +36,7 @@ GENERA = {
         'reococcyx': 'pecoran (bipedal)',
         'spiralis': 'drills',
         'talpidae': 'talpid',
+        'tetraceris': 'pecoran',
         'theroma': 'ceratopsid',
         'tyranocae': 'tyrannosaurid',
         'ungulatis': 'bovine'

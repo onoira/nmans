@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Validate a configuration file against schema.json"""
 
 import json
 import os.path as path
@@ -23,12 +24,14 @@ datum: dict[Any, Any]
 try:
     with open(filepath, 'r') as fp:
         datum = json.load(fp)
-except json.JSONDecodeError as e:
-    print("Invalid JSON:", e)
+except json.JSONDecodeError as ex:
+    print("Invalid JSON:", ex)
     sys.exit(-1)
 
 try:
     jsonschema.validate(datum, schema)
-except jsonexceptions.ValidationError as e:
-    print("Invalid schema:", e)
+except jsonexceptions.ValidationError as ex:
+    print("Invalid schema:", ex)
     sys.exit(-1)
+
+print("OK")

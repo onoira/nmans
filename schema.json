@@ -124,6 +124,31 @@
           "type": "string"
         }
       }
+    },
+    "waypoints": {
+      "description": "Waypoint types and their configured prefix.",
+      "type": "object",
+      "required": [
+        "alien",
+        "outpost",
+        "transmission",
+        "shelter",
+        "beacon"
+      ],
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "properties": {
+            "theme": {
+              "description": "Naming scheme",
+              "type": "string"
+            },
+            "prefices": {
+              "$ref": "#/definitions/affixDef"
+            }
+          }
+        }
+      }
     }
   }
 }
