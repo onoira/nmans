@@ -17,10 +17,10 @@
 
 ## 1.1
 
+- [x] Name generation:
+  - [x] Waypoint
+
+## 1.x
+
 - [ ] Name generation:
   - [ ] Flora
-
-## 1.2
-
-- [ ] Name generation:
-  - [ ] Waypoint
