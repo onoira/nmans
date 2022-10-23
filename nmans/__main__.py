@@ -81,20 +81,27 @@ def planet(
 
 
 @main.command()
+@click.option('--specific-name', prompt=True, help='Original species name (NOT genus)')
 @click.option('--habitat')
 @click.option('--genus')
 @click.option('--temper')
 def fauna(
+    specific_name: str,
     habitat: str = str(),
     genus: str = str(),
-    temper: str = str()
+    temper: str = str(),
 ) -> None:
 
+    if not specific_name:
+        click.echo("Invalid specific name")
+        sys.exit(1)
+
+    specific_name = specific_name.lower()
     habitat = _cli.select_habitat(habitat)
     genus = _cli.select_genus(genus, habitat)
     temper = _cli.select_temper(temper)
 
-    click.echo(get_fauna_name(genus, temper))
+    click.echo(get_fauna_name(genus, temper, specific_name))
 
 
 @main.command()

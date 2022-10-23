@@ -81,9 +81,14 @@ def get_planet_name(class_: SpectralClass, qualities: PlanetQualities) -> str:
     return name
 
 
-def get_fauna_name(genus: str, temper: str) -> str:
+def get_fauna_name(genus: str, temper: str, specific_name: str) -> str:
+
     deity = config.read_config().tempers[temper]
-    return f"{genus.title()} {deity} [Planet]"
+    name = portmanteaur.get_word(
+        [deity, specific_name]
+    )
+
+    return f"{genus.title()} {name} [Planet]"
 
 
 def get_waypoint_name(category: str, variant: str, theme: str) -> str:
