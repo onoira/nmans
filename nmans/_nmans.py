@@ -85,7 +85,8 @@ def get_fauna_name(genus: str, temper: str, specific_name: str) -> str:
 
     deity = config.read_config().tempers[temper]
     name = portmanteaur.get_word(
-        [deity, specific_name]
+        [deity, specific_name],
+        headers=config.get_http_headers()
     )
 
     return f"{genus.title()} {name} [Planet]"
