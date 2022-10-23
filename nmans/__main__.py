@@ -89,7 +89,7 @@ def fauna(
     specific_name: str,
     habitat: str = str(),
     genus: str = str(),
-    temper: str = str(),
+    temper: str = str()
 ) -> None:
 
     if not specific_name:
