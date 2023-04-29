@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-import portmanteaur
+import nmans.portmanfaux as portmanteaur
 from nmans import config
 from nmans.models import PlanetQualities, SpectralClass
 
